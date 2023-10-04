@@ -1,10 +1,14 @@
-﻿using Telegram.Bot;
+﻿using System.Runtime.CompilerServices;
+using Telegram.Bot;
 using Telegram.Bot.Exceptions;
 using Telegram.Bot.Polling;
+using Telegram.Bot.Requests;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
+using Telegram.Bot.Types.ReplyMarkups;
+using TelegramBot;
 
-var botClient = new TelegramBotClient("{YOUR_ACCESS_TOKEN_HERE}");
+var botClient = new TelegramBotClient("6023621119:AAHQMzlIsp63leprBkqEqZpy2RSpfChzvEc");
 
 using CancellationTokenSource cts = new();
 
@@ -31,6 +35,27 @@ cts.Cancel();
 
 async Task HandleUpdateAsync(ITelegramBotClient botClient, Update update, CancellationToken cancellationToken)
 {
+    if(update.CallbackQuery != null)
+    {
+        CallbackQuery callbackQuery = update.CallbackQuery;
+        string data = callbackQuery.Data;
+        User user = callbackQuery.From;
+        if(callbackQuery.Message.Text == "Start")
+        {
+            callbackQuery.Message.Text = "";
+        }
+        
+       Message sentMessage1 = await botClient.EditMessageTextAsync(
+        messageId: callbackQuery.Message.MessageId,
+        chatId: user.Id,
+        text: callbackQuery.Message.Text+data,
+        replyMarkup : Services.buttons(),
+        cancellationToken: cancellationToken);
+
+        
+
+
+    }
     // Only process Message updates: https://core.telegram.org/bots/api#message
     if (update.Message is not { } message)
         return;
@@ -42,10 +67,11 @@ async Task HandleUpdateAsync(ITelegramBotClient botClient, Update update, Cancel
 
     Console.WriteLine($"Received a '{messageText}' message in chat {chatId}.");
 
-    // Echo received message text
+ 
     Message sentMessage = await botClient.SendTextMessageAsync(
         chatId: chatId,
-        text: "You said:\n" + messageText,
+        text: "Start",
+        replyMarkup: Services.buttons(),
         cancellationToken: cancellationToken);
 }
 
