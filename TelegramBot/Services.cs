@@ -9,6 +9,14 @@ namespace TelegramBot
 {
     public static class Services
     {
+        public static string oper { get; set; } 
+
+        public static List<string> Numbers=new List<string>() { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "," };
+
+        public static List<string> Opers = new List<string>() { "+", "-", "*", "/" ,};
+
+        public static List<string> Servs = new List<string>() { "C", "<", "=", "%" };
+
         public static InlineKeyboardMarkup buttons()
         {
 
@@ -49,15 +57,32 @@ namespace TelegramBot
                 // fifth row
                 new []
                 {
-                    InlineKeyboardButton.WithCallbackData(text: "_", callbackData: "_"),
+                    InlineKeyboardButton.WithCallbackData(text: ",", callbackData: ","),
                     InlineKeyboardButton.WithCallbackData(text: "0", callbackData: "0"),
-                    InlineKeyboardButton.WithCallbackData(text: ".", callbackData: "."),
                     InlineKeyboardButton.WithCallbackData(text: "=", callbackData: "="),
                 },
 
             }
             );
             return inlineKeyboard;
+        }
+
+
+        public static double Add(double x, double y)
+        {
+            return x + y;
+        }
+        public static double Sub(double x, double y)
+        {
+            return x - y;
+        }
+        public static double Mul(double x, double y)
+        {
+            return x * y;
+        }
+        public static double Div(double x, double y)
+        {
+            return x / y;
         }
     }
 }
