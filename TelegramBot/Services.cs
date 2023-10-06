@@ -2,7 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
+using Telegram.Bot;
+using Telegram.Bot.Types;
 using Telegram.Bot.Types.ReplyMarkups;
 
 namespace TelegramBot
@@ -68,6 +71,116 @@ namespace TelegramBot
         }
 
 
+        public static string CalcBot(ITelegramBotClient botClient, Update update, CancellationToken cancellationToken)
+        {
+            CallbackQuery callbackQuery = update.CallbackQuery;
+            string data = callbackQuery.Data;
+            User user = callbackQuery.From;
+            if (callbackQuery.Message.Text == "Start" || callbackQuery.Message.Text == "divide zero error")
+            {
+                callbackQuery.Message.Text = "";
+            }
+            string s = callbackQuery.Message.Text;
+            if (Services.Opers.Contains(data))
+            {
+                if (Services.oper != null && s.FirstOrDefault(Services.oper[0]) == null)
+                {
+                    Services.oper = null;
+                }
+
+                if (Services.oper == null)
+                {
+                    Services.oper = data;
+                    s += data;
+                }
+
+            }
+
+
+            if (Services.Numbers.Contains(data))
+            {
+                s += data;
+            }
+            if (data.Equals("C"))
+            {
+                s = "Start";
+
+            }
+            if (data.Equals("<"))
+            {
+                s = s.Remove(s.Length - 1);
+            }
+            else if (data.Equals("="))
+            {
+                s = s.Trim();
+
+                try
+                {
+                    if(s.Length > 0 && Services.oper==null)
+                    {
+                        s = s;
+                    }
+                    else if (Services.oper != null && s.IndexOf(Services.oper) != s.Length - 1 )
+                    {
+
+                        var s1 = s.Split(Services.oper[0]).ToList();
+                        var first = Convert.ToDouble(s1[0]);
+                        var second = Convert.ToDouble(s1[1]);
+                        if (Services.oper == "-")
+                        {
+                            s = Services.Sub(first, second).ToString();
+                        }
+                        else if (Services.oper == "+")
+                        {
+                            s = Services.Add(first, second).ToString();
+                        }
+                        else if (Services.oper == "*")
+                        {
+                            s = Services.Mul(first, second).ToString();
+                        }
+                        else if (Services.oper == "/")
+                        {
+                            if (second != 0)
+                            {
+                                s = Services.Div(first, second).ToString();
+                            }
+                            else
+                            {
+                                s = "divide zero error";
+                            }
+                        }
+                        Services.oper = null;
+                    }
+                    
+                }
+                catch
+                {
+
+                }
+
+
+
+
+            }
+            else if (data.Equals("%"))
+            {
+                var s1 = s.Split(Services.oper[0]).ToList();
+                var first = Convert.ToDouble(s1[0]);
+                var second = Convert.ToDouble(s1[1]);
+                second %= 100;
+                s = first.ToString() + Services.oper + second.ToString();
+            }
+
+            return s;
+
+
+
+        }
+
+
+
+
+        #region Math
         public static double Add(double x, double y)
         {
             return x + y;
@@ -84,5 +197,7 @@ namespace TelegramBot
         {
             return x / y;
         }
+        #endregion Math
+
     }
 }
