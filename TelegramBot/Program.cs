@@ -8,7 +8,7 @@ using Telegram.Bot.Types.Enums;
 using Telegram.Bot.Types.ReplyMarkups;
 using TelegramBot;
 
-var botClient = new TelegramBotClient("6023621119:AAHQMzlIsp63leprBkqEqZpy2RSpfChzvEc");
+var botClient = new TelegramBotClient("6347696138:AAH-V2cP_VAsUNzrLD-4Mn2aYf_dK9g5Xw0");
 
 using CancellationTokenSource cts = new();
 
@@ -77,36 +77,44 @@ async Task HandleUpdateAsync(ITelegramBotClient botClient, Update update, Cancel
         else if (data.Equals("="))
         {
             s = s.Trim();
-            if (Services.oper != null && s.Length>0 )
+            
+          try
             {
+                if(Services.oper != null && s.IndexOf(Services.oper)!= s.Length-1) 
+                {
 
-                var s1 = s.Split(Services.oper[0]).ToList();
-                var first = Convert.ToDouble(s1[0]);
-                var second = Convert.ToDouble(s1[1]);
-                if(Services.oper == "-") 
-                {
-                    s = Services.Sub(first, second).ToString();
-                }
-                else if (Services.oper == "+")
-                {
-                    s = Services.Add(first, second).ToString();
-                }
-                else if (Services.oper == "*")
-                {
-                    s = Services.Mul(first, second).ToString();
-                }
-                else if (Services.oper == "/")
-                {
-                    if(second != 0)
+                    var s1 = s.Split(Services.oper[0]).ToList();
+                    var first = Convert.ToDouble(s1[0]);
+                    var second = Convert.ToDouble(s1[1]);
+                    if(Services.oper == "-") 
                     {
-                        s =  Services.Div(first, second).ToString();
+                        s = Services.Sub(first, second).ToString();
                     }
-                    else
+                    else if (Services.oper == "+")
                     {
-                        s = "divide zero error";
+                        s = Services.Add(first, second).ToString();
                     }
+                    else if (Services.oper == "*")
+                    {
+                        s = Services.Mul(first, second).ToString();
+                    }
+                    else if (Services.oper == "/")
+                    {
+                        if(second != 0)
+                        {
+                            s =  Services.Div(first, second).ToString();
+                        }
+                        else
+                        {
+                            s = "divide zero error";
+                        }
+                    }
+                    Services.oper = null;
                 }
-                Services.oper = null;
+            }
+            catch
+            {
+               
             }
             
 
