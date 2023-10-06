@@ -3,7 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
+<<<<<<< Updated upstream
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TelegramBot", "TelegramBot\TelegramBot.csproj", "{54A202C2-0D18-4ED7-BDF1-A9761F96E25C}"
+=======
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{4B103C08-8A31-42EF-889E-21931FE6D9A0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Krill-Latin", "Krill-Latin\Krill-Latin.csproj", "{536784AC-0C48-4B45-83DB-AE8811E6B50E}"
+>>>>>>> Stashed changes
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -18,5 +24,14 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{536784AC-0C48-4B45-83DB-AE8811E6B50E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{536784AC-0C48-4B45-83DB-AE8811E6B50E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{536784AC-0C48-4B45-83DB-AE8811E6B50E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{536784AC-0C48-4B45-83DB-AE8811E6B50E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{536784AC-0C48-4B45-83DB-AE8811E6B50E} = {4B103C08-8A31-42EF-889E-21931FE6D9A0}
 	EndGlobalSection
 EndGlobal
